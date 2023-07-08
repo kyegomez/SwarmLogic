@@ -1,4 +1,4 @@
-# SwarmLogic: Your Futuristic, AI-Powered Backend 
+# SwarmLogic: Your Fluid AI-Powered Backend 
 
 ## Overview
 
