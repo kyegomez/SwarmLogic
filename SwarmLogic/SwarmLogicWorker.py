@@ -13,9 +13,9 @@ class AppState(BaseModel):
 # Set up logging
 logging.basicConfig(filename="app.log", level=logging.INFO, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
-# Initialize Swarms with your API key
+# Initialize workers with your API key
 api_key = "your-api-key-here"
-swarm = worker_node(openai_api_key=api_key)
+worker = worker_node(openai_api_key=api_key)
 
 app = FastAPI()
 
@@ -38,8 +38,8 @@ async def api(app_state: AppState):
     """
 
     try:
-        # Update to call the swarm model
-        response = swarm.run(prompt)
+        # Update to call the worker model
+        response = worker.run(prompt)
         new_state = response['new_database_state']
         
         if new_state:
