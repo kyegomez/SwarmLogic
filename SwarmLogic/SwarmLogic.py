@@ -27,19 +27,19 @@ async def api(app_state: AppState):
         logging.error("Error loading database: %s", e)
         raise HTTPException(status_code=500, detail="Error loading database")
 
-    gpt3_input = f"""{db[app_state.app_name]["prompt"]}
-API Call (indexes are zero-indexed):
-{app_state.api_call}
+    prompt = f"""{db[app_state.app_name]["prompt"]}
+    API Call (indexes are zero-indexed):
+    {app_state.api_call}
 
-Database State:
-{db[app_state.app_name]["state"]}
+    Database State:
+    {db[app_state.app_name]["state"]}
 
-Output the API response as json prefixed with '!API response!:'. Then output the new database state as json, prefixed with '!New Database State!:'. If the API call is only requesting data, then don't change the database state, but base your 'API Response' off what's in the database.
-"""
+    Output the API response as json prefixed with '!API response!:'. Then output the new database state as json, prefixed with '!New Database State!:'. If the API call is only requesting data, then don't change the database state, but base your 'API Response' off what's in the database.
+    """
 
     try:
         # Update to call the swarm model
-        response = swarm.run_swarms(gpt3_input)
+        response = swarm.run_swarms(prompt)
         new_state = response['new_database_state']
         
         if new_state:
