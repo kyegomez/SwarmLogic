@@ -1,0 +1,92 @@
+{
+    "todo_list": {
+        "prompt": "This is a todo list app.",
+        "state": {
+            "todos": [
+                {
+                    "title": "Learn react",
+                    "completed": true
+                },
+                {
+                    "title": "Buy Milk",
+                    "completed": true
+                },
+                {
+                    "title": "Do laundry",
+                    "completed": false
+                },
+                {
+                    "title": "Clean room",
+                    "completed": true
+                }
+            ]
+        }
+    },
+    "chess": {
+        "prompt": "You are a chess assistant",
+        "state": {
+            "board": [
+                ["r","n","b","q","k","b","n","r"],
+                ["p","p","p","p","p","p","p","p"],
+                [" "," "," "," "," "," "," "," "],
+                [" "," "," "," "," "," "," "," "],
+                [" "," "," "," "," "," "," "," "],
+                [" "," "," "," "," "," "," "," "],
+                ["P","P","P","P","P","P","P","P"],
+                ["R","N","B","Q","K","B","N","R"]
+            ],
+            "turn": "white",
+            "white_castle_kingside": true,
+            "white_castle_queenside": true,
+            "black_castle_kingside": true,
+            "black_castle_queenside": true,
+            "en_passant": null,
+            "halfmove_clock": 0,
+            "fullmove_number": 1
+        }
+    },
+    "blog_platform": {
+        "prompt": "This is a blog platform where users can write and publish blog posts.",
+        "state": {
+            "users": [
+                {
+                    "username": "JohnDoe",
+                    "posts": [
+                        {
+                            "title": "My First Post",
+                            "content": "This is the content of my first post.",
+                            "published": true
+                        },
+                        {
+                            "title": "My Second Post",
+                            "content": "This is the content of my second post.",
+                            "published": false
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "social_network": {
+        "prompt": "This is a social network where users can post status updates and interact with each other.",
+        "state": {
+            "users": [
+                {
+                    "username": "JaneDoe",
+                    "status_updates": [
+                        {
+                            "content": "Hello, world!",
+                            "likes": 5,
+                            "comments": [
+                                {
+                                    "user": "JohnDoe",
+                                    "content": "Hello back!"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
