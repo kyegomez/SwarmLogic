@@ -1,0 +1,4 @@
+swarms
+fastapi
+typing
+pydantic
