@@ -1,42 +1,52 @@
-from flask import Flask
-from flask_cors import CORS
-import re
+from fastapi import FastAPI, HTTPException
+from typing import Optional
 
 import json
-import ast
+import logging
+from pydantic import BaseModel
 from swarms import Swarms
 
-app = Flask(__name__)
-CORS(app)
+class AppState(BaseModel):
+    app_name: str
+    api_call: str
 
-api_key = "your_api_key_here"  # Replace with your actual API key
-swarm = Swarms(api_key=api_key)
+# Set up logging
+logging.basicConfig(filename="app.log", level=logging.INFO, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
-db = json.load(open('db.json','r'))
-print("INITIAL DB STATE")
-print(db['todo_list']["state"])
+# Initialize Swarms with your API key
+api_key = "your-api-key-here"
+swarm = Swarms(openai_api_key=api_key)
 
-@app.route('/<app_name>/<api_call>')
-def api(app_name, api_call):
-    db = json.load(open('db.json','r'))
-    print("INPUT DB STATE")
-    print(db[app_name]["state"])
+app = FastAPI()
 
-    objective = f"""{db[app_name]["prompt"]}
-    API Call (indexes are zero-indexed):
-    {api_call}
+@app.post("/{app_name}/{api_call}")
+async def api(app_state: AppState):
+    try:
+        db = json.load(open('db.json', 'r'))
+    except Exception as e:
+        logging.error("Error loading database: %s", e)
+        raise HTTPException(status_code=500, detail="Error loading database")
 
-    Database State:
-    {db[app_name]["state"]}
+    gpt3_input = f"""{db[app_state.app_name]["prompt"]}
+API Call (indexes are zero-indexed):
+{app_state.api_call}
 
-    Output the API response as json prefixed with '!API response!:'. Then output the new database state as json, prefixed with '!New Database State!:'. If the API call is only requesting data, then don't change the database state, but base your 'API Response' off what's in the database.
-    """
+Database State:
+{db[app_state.app_name]["state"]}
 
-    response, new_state = swarm.run_swarms(objective)
+Output the API response as json prefixed with '!API response!:'. Then output the new database state as json, prefixed with '!New Database State!:'. If the API call is only requesting data, then don't change the database state, but base your 'API Response' off what's in the database.
+"""
 
-    db[app_name]["state"] = new_state
-    json.dump(db, open('db.json', 'w'), indent=4)
+    try:
+        # Update to call the swarm model
+        response = swarm.run_swarms(gpt3_input)
+        new_state = response['new_database_state']
+        
+        if new_state:
+            db[app_state.app_name]["state"] = new_state
+            json.dump(db, open('db.json', 'w'), indent=4)
+    except Exception as e:
+        logging.error("Error running model or updating state: %s", e)
+        raise HTTPException(status_code=500, detail="Error running model or updating state")
+        
     return response
-
-if __name__ == "__main__":
-    app.run()
