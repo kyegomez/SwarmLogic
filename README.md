@@ -69,7 +69,7 @@ We appreciate contributions of any kind and acknowledge them on our README. Plea
 
 ## Roadmap
 
-We're dedicated to innovating backend development, and our roadmap is a testament to that. Each phase is a calculated step towards making our vision a reality. To learn more, check out the `ROADMAP.md` file in the root directory.
+We're dedicated to innovating backend development, and our roadmap is a testament to that. Each phase is a calculated step towards making our vision a reality. To learn more, check out the [roadmap file](docs/ROADMAP.md) file in the root directory.
 
 ## License
 

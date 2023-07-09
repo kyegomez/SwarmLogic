@@ -2,3 +2,6 @@ swarms
 fastapi
 typing
 pydantic
+
+opendal
+sqlalchemy
