@@ -6,7 +6,7 @@ import logging
 from pydantic import BaseModel
 from swarms import Swarms
 
-from SwarmLogic.connectors import SQLAlchemyConnector, OpenDALConnector, JsonDBConnector
+from swarm_logic.connectors import SQLAlchemyConnector, OpenDALConnector, JsonDBConnector
 
 class AppState(BaseModel):
     app_name: str
